@@ -1,12 +1,19 @@
-import styles from '@styles/Header.module.scss'
+import styles from "@styles/Header.module.scss";
 
 const Header = () => {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <img src="/samy-logo.svg" alt="SAMY Enterprise Logo" />
-      <input type="text" placeholder='input aqui' />
-    </div>
-  )
-}
+      <form>
+        <input
+          className="e1"
+          type="text"
+          placeholder="You're looking for something?"
+        />
+        <img src="/search-icon.svg" alt="" />
+      </form>
+    </header>
+  );
+};
 
-export default Header
+export default Header;

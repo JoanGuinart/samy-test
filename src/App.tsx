@@ -1,11 +1,12 @@
-import "./App.css";
 import Header from "@components/Header";
 
 function App() {
-  console.log("App");
   return (
     <>
+      <div className="app">
       <Header />
+
+      </div>
     </>
   );
 }
