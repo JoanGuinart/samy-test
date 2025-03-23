@@ -6,6 +6,7 @@ export interface Image {
   liked: boolean;
   author: string;
   createdAt: string;
+  price: string;
 }
 
 export interface PageInfo {

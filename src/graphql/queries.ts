@@ -11,6 +11,7 @@ export const GET_IMAGES = gql`
         liked
         author
         createdAt
+        price
       }
       pageInfo {
         endCursor
