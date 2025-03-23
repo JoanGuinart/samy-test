@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_IMAGES = gql`
-  query GetImages($first: Int) {
-    images(first: $first) {
+  query GetImages($first: Int, $after: String) {
+    images(first: $first, after: $after) {
       nodes {
         id
         title
