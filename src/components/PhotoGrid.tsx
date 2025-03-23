@@ -1,43 +1,54 @@
 import { useQuery } from "@apollo/client";
 import { GET_IMAGES } from "@graphql/queries";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import { ImagesData } from "src/types/types";
 
 export const PhotoGrid = () => {
   const { loading, error, data, fetchMore } = useQuery<ImagesData>(GET_IMAGES, {
-    variables: { first: 12 },
+    variables: { first: 24 },
   });
 
   const [hasMore, setHasMore] = useState(true);
+  const [observerEnabled, setObserverEnabled] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
   const isFetching = useRef(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setObserverEnabled(true);
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const loadMoreImages = useCallback(() => {
     if (isFetching.current || !data?.images.pageInfo.hasNextPage) return;
 
-      isFetching.current = true;
+    isFetching.current = true;
 
-      fetchMore({
-        variables: {
-          first: 12,
-          after: data.images.pageInfo.endCursor,
-        },
+    fetchMore({
+      variables: {
+        first: 24,
+        after: data.images.pageInfo.endCursor,
+      },
+    })
+      .then((fetchResult) => {
+        if (!fetchResult.data?.images.pageInfo.hasNextPage) {
+          setHasMore(false);
+          console.log("No more images to load");
+        }
       })
-        .then((fetchResult) => {
-          if (!fetchResult.data?.images.pageInfo.hasNextPage) {
-            setHasMore(false);
-            console.log("No more images to load");
-          }
-        })
-        .finally(() => {
-          isFetching.current = false;
-        });
-    
+      .finally(() => {
+        isFetching.current = false;
+      });
   }, [data, fetchMore]);
 
   const lastImageRef = useCallback(
     (node: HTMLElement | null) => {
-      if (loading || !node || isFetching.current) return;
+      if (loading || !node || isFetching.current || !observerEnabled) return;
 
       if (observer.current) observer.current.disconnect();
 
@@ -48,22 +59,20 @@ export const PhotoGrid = () => {
             loadMoreImages();
           }
         },
-        { threshold: 1.0 }
+        { rootMargin: "10px", threshold: 0 }
       );
 
-      if (node) observer.current.observe(node);
+      observer.current.observe(node);
     },
-    [loading, hasMore, loadMoreImages]
+    [loading, hasMore, loadMoreImages, observerEnabled]
   );
-
-  console.log("Loading:", loading, "Has More:", hasMore);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return <div>Error Loading Images</div>;
 
   return (
-    <div className="photo-grid">
+    <div className="photo-grid bg-gray-300">
       {data.images.nodes.map((image, index) => (
         <div
           key={image.id}
