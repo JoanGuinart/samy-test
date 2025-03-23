@@ -3,7 +3,7 @@ import styles from "@styles/Header.module.scss";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <img src="/samy-logo.svg" alt="SAMY Enterprise Logo" />
+      <img className="logo" src="/samy-logo.svg" alt="SAMY Enterprise Logo" />
       <form>
         <input
           className="e1"
