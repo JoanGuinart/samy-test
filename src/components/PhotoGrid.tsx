@@ -88,7 +88,8 @@ export const PhotoGrid = ({ searchTerm }: { searchTerm: string }) => {
           ref={index === data.images.nodes.length - 1 ? lastImageRef : null}
           className="max-w-[328px] md:max-w-[400px] w-full h-auto"
         >
-          <div className="w-full max-h-[360px] overflow-hidden relative">
+          <div className="w-full max-h-[360px] overflow-hidden relative photo-container">
+            <div className="custom-gradient"></div>
             <img
               className="object-cover w-full h-full"
               src={image.picture}
@@ -102,10 +103,10 @@ export const PhotoGrid = ({ searchTerm }: { searchTerm: string }) => {
               </span>
             </div>
             {/* only desktop */}
-            <div className="absolute bottom-[84px] right-5 hidden md:flex flex-col justify-center items-center gap-[6px]">
+            <div className="desktop-like-share-buttons absolute bottom-[84px] right-5 hidden md:flex flex-col justify-center items-center gap-[6px]">
               <LikesButton image={image} />
             </div>
-            <button className="absolute bottom-6 right-5 hidden md:flex flex-col justify-center items-center gap-[6px] cursor-pointer">
+            <button className="desktop-like-share-buttons absolute bottom-6 right-5 hidden md:flex flex-col justify-center items-center gap-[6px] cursor-pointer">
               <img
                 className="w-5 h-auto"
                 src="/share-white.svg"

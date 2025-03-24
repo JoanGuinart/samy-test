@@ -24,7 +24,7 @@ body {
   line-height: 100%;
   color: variables.$ash-black;
 }
-.e2{
+.e2 {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 28px;
@@ -39,6 +39,30 @@ body {
   font-size: 16px;
   line-height: 100%;
   color: variables.$gray;
+}
+
+.photo-container {
+  &:hover{
+    .custom-gradient {
+      opacity: 1;
+    }
+    .desktop-like-share-buttons {
+      opacity: 1;
+    }
+  }
+  .desktop-like-share-buttons {
+    opacity: 0;
+  }
+  .custom-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, #000000e5 0%, #d9d9d900 90%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 }
 
 .animate-heart {
