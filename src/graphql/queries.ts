@@ -20,3 +20,15 @@ export const GET_IMAGES = gql`
     }
   }
 `;
+
+export const LIKE_IMAGE = gql`
+  mutation LikeImage($input: LikeImageInput!) {
+    likeImage(input: $input) {
+      image {
+        id
+        likesCount
+      }
+    }
+  }
+`;
+
