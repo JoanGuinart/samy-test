@@ -10,6 +10,7 @@
   align-items: end;
   padding-inline: 80px;
   background-color: #ffffff;
+  z-index: 9999;
 }
 @media screen and (min-width: 768px) {
   .header {

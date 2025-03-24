@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { GET_IMAGES } from "@graphql/queries";
 import { useCallback, useRef, useState, useEffect } from "react";
 import { ImagesData } from "src/types/types";
+import LikesButton from "./LikesButton";
 
 export const PhotoGrid = () => {
   const { loading, error, data, fetchMore } = useQuery<ImagesData>(GET_IMAGES, {
@@ -92,6 +93,18 @@ export const PhotoGrid = () => {
                 <span className="text-xs">€</span>
               </span>
             </div>
+            {/* only desktop */}
+            <div className="absolute bottom-[84px] right-5 hidden md:flex flex-col justify-center items-center gap-[6px]">
+              <LikesButton image={image} />
+            </div>
+            <div className="absolute bottom-6 right-5 hidden md:flex flex-col justify-center items-center gap-[6px]">
+              <img
+                className="w-5 h-auto"
+                src="/share-white.svg"
+                alt="share button"
+              />
+              <p className="text-white">0</p>
+            </div>
           </div>
 
           <div className="border-[1px] border-[#d3d3d3] flex flex-col items-center justify-center gap-[10px] h-[100px]">
@@ -100,12 +113,15 @@ export const PhotoGrid = () => {
               <span className="e3">by</span> {image.author}
             </p>
           </div>
+          {/* only mobile */}
           <div className="flex md:hidden items-center justify-center h-[59px] border-b-[1px] border-x-[1px] border-[#d3d3d3]">
             <div className="flex justify-center items-center w-1/2 h-full border-r-[1px] border-[#d3d3d3]">
-              likes
+              <p className="mr-[5px]">{image.likesCount}</p>
+              <img src="/heart.svg" alt="likes button" />
             </div>
             <div className="flex justify-center items-center w-1/2 h-full">
-              share
+              <p className="mr-[5px]">0</p>
+              <img src="/share-black.svg" alt="share button" />
             </div>
           </div>
         </div>

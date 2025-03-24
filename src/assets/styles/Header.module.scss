@@ -12,6 +12,7 @@
   align-items: end;
   padding-inline: 80px;
   background-color: variables.$white;
+  z-index: 9999;
   @media screen and (min-width: variables.$tablet) {
     align-items: center;
     justify-content: space-between;
