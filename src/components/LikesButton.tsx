@@ -86,21 +86,25 @@ const LikesButton: React.FC<LikeButtonProps> = ({ image }) => {
       localStorage.setItem("likedImages", JSON.stringify(likedImages));
     } catch (error) {
       console.error("Error updating likes:", error);
-      alert("Error: " + error.message); // Mostrar error en el navegador
+      if (error instanceof Error) {
+        alert("Error: " + error.message);
+      } else {
+        alert("An unknown error occurred.");
+      }
     }
   };
 
   return (
-    <div className="hidden md:flex flex-col justify-center items-center gap-[6px]">
-      <button onClick={handleLike}>
+    <button onClick={handleLike} className="flex flex-row md:flex-col justify-center items-center gap-[6px] cursor-pointer w-full h-full md:w-auto md:h-auto">
+      <div>
         <img
-          className={`w-5 h-auto ${liked ? "scale-100" : "scale-125"}`}
-          src="/heart.svg"
+          className={`w-5 h-auto cursor-pointer ${liked ? "animate-heart" : ""}`}
+          src= {liked ? "/filled-heart.png" : "/heart.svg"}
           alt="likes button"
         />
-      </button>
-      <p className="text-white">{likesCount}</p>
-    </div>
+      </div>
+      <p className="text-[#1d1d1b] md:text-white">{likesCount}</p>
+    </button>
   );
 };
 
